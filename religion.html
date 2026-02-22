@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Religion</title>
+    <style>
+        body { font-family: Arial; text-align:center; padding-top:50px; background:#f0f4f8; }
+        button {
+            margin:10px;
+            padding:15px 25px;
+            font-size:16px;
+            cursor:pointer;
+            border:none;
+            border-radius:8px;
+            color:white;
+            transition:0.3s;
+        }
+        #hindu { background:#fbc02d; color:#000; }
+        #christian { background:#1976d2; }
+        #islam { background:#388e3c; }
+        #sikh { background:#f57c00; }
+        #buddhist { background:#9c27b0; }
+        button:hover { opacity:0.8; }
+    </style>
+</head>
+<body>
+    <h2>Select Your Religion</h2>
+    <button id="hindu" onclick="goTo('hindu')">Hinduism</button>
+    <button id="christian" onclick="goTo('christian')">Christianity</button>
+    <button id="islam" onclick="goTo('islam')">Islam</button>
+    <button id="sikh" onclick="goTo('sikh')">Sikhism</button>
+    <button id="buddhist" onclick="goTo('buddhist')">Buddhism</button>
+
+    <script>
+        function goTo(religion) {
+            window.location.href = "scriptures.html?religion=" + religion;
+        }
+    </script>
+</body>
+</html>

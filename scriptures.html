@@ -1,28 +1,135 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Spiritual Wisdom Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <title>Spiritual Youth Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Montserrat', Arial, sans-serif; padding:20px; background:#fefefe; color:#333; }
-        h1 { text-align:center; font-size:2.5em; margin-bottom:10px; color:#00695c; }
-        .chapter-btn { margin:5px; padding:12px 18px; cursor:pointer; border:none; border-radius:8px; font-weight:600; color:white; transition:0.3s; }
-        .chapter-btn:hover { opacity:0.8; }
-        .verse-block { margin:15px 0; padding:15px; border-radius:10px; background: #ffffff; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
-        .verse-block p { margin:6px 0; line-height:1.5; }
-        .back-btn { margin-top:20px; padding:10px 20px; border:none; border-radius:8px; background:#00796b; color:white; cursor:pointer; font-weight:600; }
-        .back-btn:hover { opacity:0.8; }
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            margin:0;
+            padding:0;
+            background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+            color:#333;
+        }
+
+        header {
+            text-align:center;
+            padding:50px 20px;
+            background: linear-gradient(to right, #4db6ac, #26a69a);
+            color:white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size:3.5em;
+            margin-bottom:15px;
+        }
+
+        header p {
+            font-size:1.8em;
+            font-weight:500;
+        }
+
+        .buttons {
+            text-align:center;
+            margin-top:40px;
+        }
+
+        .chapter-btn {
+            margin:10px;
+            padding:18px 30px;
+            font-size:20px;
+            font-weight:bold;
+            border:none;
+            border-radius:12px;
+            color:white;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .chapter-btn:hover {
+            transform:scale(1.05);
+            opacity:0.9;
+        }
+
+        #content {
+            max-width:1000px;
+            margin:40px auto;
+            padding:20px;
+        }
+
+        .verse-block {
+            background:#ffffff;
+            border-radius:15px;
+            padding:30px;
+            margin-bottom:30px;
+            box-shadow:0 6px 25px rgba(0,0,0,0.2);
+        }
+
+        .verse-block p {
+            margin:12px 0;
+            line-height:1.8;
+            font-size:1.2em;
+        }
+
+        .back-btn {
+            display:block;
+            margin:40px auto;
+            padding:18px 35px;
+            font-size:20px;
+            font-weight:bold;
+            border:none;
+            border-radius:12px;
+            background:#00796b;
+            color:white;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .back-btn:hover {
+            opacity:0.9;
+            transform:scale(1.05);
+        }
+
+        hr {
+            border:0;
+            height:3px;
+            background:#26a69a;
+            margin:40px 0;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width:768px) {
+            header h1 { font-size:2.5em; }
+            header p { font-size:1.3em; }
+            .chapter-btn { font-size:18px; padding:15px 20px; }
+            .verse-block { padding:20px; margin-bottom:20px; }
+            .verse-block p { font-size:1em; }
+            .back-btn { font-size:18px; padding:15px 25px; }
+        }
+
+        @media (max-width:480px) {
+            header h1 { font-size:2em; }
+            header p { font-size:1.1em; }
+            .chapter-btn { font-size:16px; padding:12px 18px; }
+            .verse-block { padding:15px; margin-bottom:15px; }
+            .verse-block p { font-size:0.95em; }
+            .back-btn { font-size:16px; padding:12px 20px; }
+        }
+
     </style>
 </head>
 <body>
 
-<h1 id="title">Scripture</h1>
+<header>
+    <h1>🌿 Spiritual Youth Hub</h1>
+    <p>Reconnect with the Wisdom of World Scriptures</p>
+</header>
+
 <div class="buttons" id="buttons"></div>
 <div id="content"></div>
-
-<div style="text-align:center;">
-    <button class="back-btn" onclick="window.history.back()">⬅ Back</button>
-</div>
+<button class="back-btn" onclick="window.history.back()">⬅ Back</button>
 
 <script>
 const params = new URLSearchParams(window.location.search);
@@ -31,79 +138,55 @@ const religion = params.get("religion");
 // Color themes
 const colors = { hindu:'#fbc02d', christian:'#1976d2', islam:'#388e3c', sikh:'#f57c00', buddhist:'#9c27b0' };
 
-// Selected important verses only
+// Important selected verses
 const scriptures = {
-
-    hindu:{
-        name:"🕉️ Bhagavad Gita",
-        chapters:{
-            2:{title:"Chapter 2: Karma Yoga", verses:[{sanskrit:"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन", hindi:"तुम्हारा केवल कर्म करने का अधिकार है, फल की चिंता मत करो।", english:"You have the right to work only, never to the fruits of work."}]},
-            12:{title:"Chapter 12: Bhakti Yoga", verses:[{sanskrit:"यस्मिन न हि प्रीतिः लोको न लोको न द्विजते च यः", hindi:"जिसका हृदय दूसरों को कष्ट नहीं पहुँचाता और शांत रहता है।", english:"One who is free from hatred and is peaceful is dear to God."}]},
-            18:{title:"Chapter 18: Moksha Sanyasa Yoga", verses:[{sanskrit:"सङ्गं त्यक्त्वा कर्म कर यः मुक्तः स निश्चयतः", hindi:"सभी आसक्ति छोड़कर कर्म करने वाला व्यक्ति मुक्ति को प्राप्त होता है।", english:"One who performs duty free of attachment attains liberation."}]}
-        }
-    },
-
-    christian:{
-        name:"✝️ The Bible",
-        chapters:{
-            Genesis1:{title:"Genesis Chapter 1", verses:[{verse:"In the beginning God created the heavens and the earth.", meaning:"God is the Creator of all things."}]},
-            Psalm23:{title:"Psalm 23", verses:[{verse:"The Lord is my shepherd; I shall not want.", meaning:"God provides and protects."}]},
-            John316:{title:"John 3:16", verses:[{verse:"For God so loved the world that He gave His only Son.", meaning:"God’s love brings salvation."}]}
-        }
-    },
-
-    islam:{
-        name:"☪️ The Qur'an",
-        chapters:{
-            alFatiha:{title:"Al-Fatiha", verses:[{arabic:"بسم الله الرحمن الرحيم", hindi:"अल्लाह के नाम से, जो बहुत दयालु, अति कृपालु है।", english:"In the name of Allah, the Most Gracious, the Most Merciful."}]},
-            alIkhlas:{title:"Al-Ikhlas (112)", verses:[{arabic:"قل هو الله أحد", hindi:"कहो, वह अल्लाह एक है।", english:"Say: He is Allah, the One."}]},
-            ayatAlKursi:{title:"Ayat al-Kursi", verses:[{arabic:"اللّهُ لا إِلَٰهَ إِلَّا هُوَ", hindi:"अल्लाह; उसके सिवा कोई नहीं।", english:"Allah! There is no deity except Him."}]}
-        }
-    },
-
-    sikh:{
-        name:"🙏 Guru Granth Sahib",
-        chapters:{
-            moolMantar:{title:"Mool Mantar", verses:[{gurmukhi:"ੴ ਸਤਿਨਾਮੁ ਕਰਤਾ ਪੁਰਖੁ ਨਿਰਭਉ ਨਿਰਵੈਰੁ ਅਕਾਲ ਮੂਰਤਿ ਅਜੂਨੀ ਸੈਭੰ ਗੁਰ ਪ੍ਰਸਾਦਿ", hindi:"एक ईश्वर, सत्य नाम, सृष्टिकर्ता, निडर, द्वेषरहित, अकाल मूरत, अजूनी, स्वयं उपलब्ध, गुरु की कृपा से।", english:"One Universal Creator God, The Name Is Truth, Creative Being Personified, No Fear, No Hatred, Image Of The Timeless One, Beyond Birth, Self-Existent, By Guru's Grace."}]},
-            sukhmani:{title:"Sukhmani Sahib (First 3 Padas)", verses:[{gurmukhi:"ਸਰਬ ਸਬਦਿ ਸਮਾਵੇ", hindi:"सभी शब्दों में सच्चा संगत समाहित होता है।", english:"Through all the words, one obtains true companionship."}]}
-        }
-    },
-
-    buddhist:{
-        name:"☸️ Buddhist Chants",
-        chapters:{
-            chant1:{title:"Om Mani Padme Hum", verses:[{verse:"Om Mani Padme Hum — Cultivate compassion and wisdom."}]},
-            chant2:{title:"Heart Sutra", verses:[{verse:"Form is emptiness, emptiness is form."}]}
-        }
-    }
-
+    hindu:{name:"🕉️ Bhagavad Gita", chapters:{
+        2:{title:"Chapter 2: Karma Yoga", verses:[{sanskrit:"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन", hindi:"कर्म करने का अधिकार है, फल की चिंता मत करो।", english:"You have the right to work only, never to the fruits."}]},
+        12:{title:"Chapter 12: Bhakti Yoga", verses:[{sanskrit:"यस्मिन न हि प्रीतिः लोको न लोको न द्विजते च यः", hindi:"जो शांत और दयालु है, वह भगवान के प्रिय है।", english:"One who is peaceful and compassionate is dear to God."}]},
+        18:{title:"Chapter 18: Moksha Sanyasa Yoga", verses:[{sanskrit:"सङ्गं त्यक्त्वा कर्म कर यः मुक्तः स निश्चयतः", hindi:"सभी आसक्ति छोड़कर कर्म करने वाला व्यक्ति मुक्ति प्राप्त करता है।", english:"One who performs duty free of attachment attains liberation."}]}
+    }},
+    christian:{name:"✝️ The Bible", chapters:{
+        Genesis1:{title:"Genesis 1", verses:[{verse:"In the beginning God created the heavens and the earth.", meaning:"God is the Creator of all things."}]},
+        Psalm23:{title:"Psalm 23", verses:[{verse:"The Lord is my shepherd; I shall not want.", meaning:"God provides and protects."}]}
+    }},
+    islam:{name:"☪️ The Qur'an", chapters:{
+        alFatiha:{title:"Al-Fatiha", verses:[{arabic:"بسم الله الرحمن الرحيم", hindi:"अल्लाह के नाम से, जो कृपालु और दयालु है।", english:"In the name of Allah, the Most Gracious, the Most Merciful."}]},
+        alIkhlas:{title:"Al-Ikhlas", verses:[{arabic:"قل هو الله أحد", hindi:"कहो, वह अल्लाह एक है।", english:"Say: He is Allah, the One."}]}
+    }},
+    sikh:{name:"🙏 Guru Granth Sahib", chapters:{
+        moolMantar:{title:"Mool Mantar", verses:[{gurmukhi:"ੴ ਸਤਿਨਾਮੁ ਕਰਤਾ ਪੁਰਖੁ ਨਿਰਭਉ ਨਿਰਵੈਰੁ ਅਕਾਲ ਮੂਰਤਿ ਅਜੂਨੀ ਸੈਭੰ ਗੁਰ ਪ੍ਰਸਾਦਿ", hindi:"एक ईश्वर, सत्य नाम, सृष्टिकर्ता, निडर, द्वेषरहित, गुरु कृपा से।", english:"One Universal Creator God, The Name Is Truth..."}]},
+        sukhmani:{title:"Sukhmani Sahib (First 3 Padas)", verses:[{gurmukhi:"ਸਰਬ ਸਬਦਿ ਸਮਾਵੇ", hindi:"सभी शब्दों में सच्चा संगत है।", english:"Through all words, one attains true companionship."}]}
+    }},
+    buddhist:{name:"☸️ Buddhist Chants", chapters:{
+        chant1:{title:"Om Mani Padme Hum", verses:[{verse:"Om Mani Padme Hum — Cultivate compassion and wisdom."}]}
+    }}
 };
 
-// Display title
+// Title & buttons
 document.getElementById("title").innerText = scriptures[religion].name;
 document.getElementById("title").style.color = colors[religion] || '#333';
 
 // Add chapter buttons
-let btnHTML = "";
+let btnHTML="";
 for(let chap in scriptures[religion].chapters){
-    btnHTML += `<button class="chapter-btn" style="background:${colors[religion]}" onclick="showChapter('${chap}')">${scriptures[religion].chapters[chap].title}</button>`;
+    btnHTML+=`<button class="chapter-btn" style="background:${colors[religion]}" onclick="showChapter('${chap}')">${scriptures[religion].chapters[chap].title}</button>`;
 }
 document.getElementById("buttons").innerHTML = btnHTML;
 
 // Show chapter content
 function showChapter(chap){
     const chapter = scriptures[religion].chapters[chap];
-    let html = "";
+    let html="";
     chapter.verses.forEach(v=>{
-        html += `<div class="verse-block">`;
-        if(religion=="hindu") html += `<p><strong>Sanskrit:</strong> ${v.sanskrit}</p><p><strong>Hindi:</strong> ${v.hindi}</p><p><strong>English:</strong> ${v.english}</p>`;
-        else if(religion=="christian") html += `<p><strong>Verse:</strong> ${v.verse}</p><p><strong>Meaning:</strong> ${v.meaning}</p>`;
-        else if(religion=="islam") html += `<p><strong>Arabic:</strong> ${v.arabic}</p><p><strong>Hindi:</strong> ${v.hindi}</p><p><strong>English:</strong> ${v.english}</p>`;
-        else if(religion=="sikh") html += `<p><strong>Gurmukhi:</strong> ${v.gurmukhi}</p><p><strong>Hindi:</strong> ${v.hindi}</p><p><strong>English:</strong> ${v.english}</p>`;
-        else if(religion=="buddhist") html += `<p>${v.verse}</p>`;
-        html += `</div>`;
+        html+=`<div class="verse-block">`;
+        if(religion=="hindu") html+=`<p><strong>Sanskrit:</strong> ${v.sanskrit}</p><p><strong>Hindi:</strong> ${v.hindi}</p><p><strong>English:</strong> ${v.english}</p>`;
+        else if(religion=="christian") html+=`<p><strong>Verse:</strong> ${v.verse}</p><p><strong>Meaning:</strong> ${v.meaning}</p>`;
+        else if(religion=="islam") html+=`<p><strong>Arabic:</strong> ${v.arabic}</p><p><strong>Hindi:</strong> ${v.hindi}</p><p><strong>English:</strong> ${v.english}</p>`;
+        else if(religion=="sikh") html+=`<p><strong>Gurmukhi:</strong> ${v.gurmukhi}</p><p><strong>Hindi:</strong> ${v.hindi}</p><p><strong>English:</strong> ${v.english}</p>`;
+        else if(religion=="buddhist") html+=`<p>${v.verse}</p>`;
+        html+=`</div>`;
     });
-    document.getElementById("content").innerHTML = html;
+    document.getElementById("content").innerHTML=html;
 }
 </script>
 
